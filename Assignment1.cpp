@@ -7,7 +7,7 @@
 int main()
 {
 	// DO NOT TOUCH START
-	// for loop. random write length, random read length
+	// for loop. random write length, random read length.
 	//std::random_device rd;
 	//std::mt19937 gen(rd());
 	std::mt19937 gen(100);
