@@ -39,8 +39,11 @@ void freeMemory(RingBuffer* buffer)
 	for (unsigned int i = 0; i < buffer->size; i++)
 	{
 		delete[] buffer->data[i];
+		buffer->data[i] = nullptr;
+
 	}
 	delete[] buffer->data;
+	buffer->data = nullptr;
 	delete buffer;
 	buffer = nullptr;
 }
@@ -50,7 +53,6 @@ void countElements(RingBuffer* buffer, char value)
 	unsigned int count = 0;
 	for (unsigned int i = 0; i < buffer->size; i++) {
 		if (buffer->data[i]->content == value) {
-			cout << buffer->data[i]->content << endl;
 			count++;
 		}
 	}
@@ -94,9 +96,11 @@ void resizeBuffer(RingBuffer* buffer, unsigned int newSize)
 		for (unsigned int i = 0; i < buffer->size; i++)
 		{
 			delete[] buffer->data[i];
+			buffer->data[i] = nullptr;
 		}
-
+		delete[] buffer->data;
 		buffer->data = new Data*[newSize];
+		buffer->size = newSize;
 
 		for (unsigned int k = 0; k < newSize; ++k) {
 			buffer->data[k] = new Data;
@@ -114,11 +118,12 @@ void resizeBuffer(RingBuffer* buffer, unsigned int newSize)
 			buffer->writeIdx = newSize;
 		}
 
-		buffer->size = newSize;
-
 		for (unsigned int j = newSize; j < buffer->size; j++) {
 			delete[] buffer->data[j];
+			buffer->data[j] = nullptr;
 		}
+
+		buffer->size = newSize;
 	}
 
 	else {

@@ -41,13 +41,43 @@ int main()
 	// TODO: write your test code here.
 	// check if all memory is freed using the diagnostics tool.
 
-	char letter = 't';
-	//countElements(buffer, letter);
+	// count a char
+	cout << "Search for a char output:" << endl;
+	char letter = 'a';
+	countElements(buffer, letter);
 
-//	freeMemory(buffer);
+	// Copy an existing buffer
+	RingBuffer* copyBuffer = copyRingbuffer(buffer);
 
-	//RingBuffer* copyBuffer = copyRingbuffer(buffer);
-	resizeBuffer(buffer, 30);
+	// Check the content of both buffers
+	cout << "Buffer and CopyBuffer content:" << endl;
+	checkBuffer(buffer);
+	checkBuffer(copyBuffer);
+
+	// Resize a buffer
+	unsigned int originalBufferSize = buffer->size;
+
+	// Biger
+	unsigned int newSizeBig = 50;
+	resizeBuffer(buffer, newSizeBig);
+
+	if (newSizeBig > originalBufferSize) {
+		for (unsigned int j = originalBufferSize; j < buffer->size; j++) {
+			buffer->data[j]->content = 'o';
+		}
+	}
+
+	//Smaller
+	unsigned int newSizeSmall = 30;
+	resizeBuffer(copyBuffer, newSizeSmall);
+
+	cout << "Resized buffer output:" << endl;
+	checkBuffer(buffer);
+	checkBuffer(copyBuffer);
+
+	// Free the memory
+	freeMemory(buffer);
+	freeMemory(copyBuffer);
 
 	return 0;
 }
